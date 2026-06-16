@@ -1,0 +1,393 @@
+:root {
+  --green: #39ff14;
+  --green-glow: rgba(57, 255, 20, 0.5);
+  --dark-bg: #0d0f0e;
+  --panel-bg: rgba(20, 26, 23, 0.85);
+  --border-color: rgba(57, 255, 20, 0.3);
+  --text-primary: #e0eae4;
+  --text-muted: #8c9c93;
+  --accent-red: #ff3b30;
+  --accent-yellow: #ffcc00;
+  
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at center, #142118 0%, #080b09 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Sci-fi Tech Panel */
+.omnitrix-container {
+  width: 90%;
+  max-width: 800px;
+  background: var(--panel-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), 0 0 15px var(--green-glow);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  margin: 1.5rem auto;
+}
+
+/* Decorative Omnitrix lines/circles */
+.omnitrix-container::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 1px dashed rgba(57, 255, 20, 0.15);
+  animation: rotateClockwise 40s linear infinite;
+  pointer-events: none;
+}
+
+.omnitrix-container::after {
+  content: '';
+  position: absolute;
+  bottom: -50px;
+  left: -50px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid rgba(57, 255, 20, 0.1);
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes rotateClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateCounter {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes pulseGreen {
+  0%, 100% { box-shadow: 0 0 15px var(--green-glow); }
+  50% { box-shadow: 0 0 25px rgba(57, 255, 20, 0.8); }
+}
+
+@keyframes glowBorder {
+  0%, 100% { border-color: rgba(57, 255, 20, 0.3); }
+  50% { border-color: rgba(57, 255, 20, 0.8); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Typography */
+.tech-font {
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 2px;
+}
+
+.text-glow {
+  text-shadow: 0 0 8px var(--green-glow);
+}
+
+.text-glow-red {
+  text-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
+}
+
+/* Buttons */
+.btn-omni {
+  background: rgba(18, 30, 24, 0.8);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-omni:hover:not(:disabled) {
+  background: rgba(57, 255, 20, 0.15);
+  border-color: var(--green);
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-omni:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-omni-primary {
+  background: rgba(57, 255, 20, 0.1);
+  border: 2px solid var(--green);
+  color: var(--green);
+}
+
+.btn-omni-primary:hover {
+  background: var(--green);
+  color: #000;
+  box-shadow: 0 0 20px var(--green-glow);
+}
+
+/* Mode select grid */
+.mode-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 600px) {
+  .mode-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Alien Card Selection */
+.alien-selection {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.2rem;
+  padding: 1rem 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--green) rgba(0, 0, 0, 0.2);
+}
+
+.alien-card {
+  flex: 0 0 140px;
+  background: rgba(25, 33, 29, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.alien-card:hover {
+  border-color: rgba(57, 255, 20, 0.5);
+  transform: scale(1.05);
+}
+
+.alien-card.selected {
+  border-color: var(--green);
+  background: rgba(57, 255, 20, 0.08);
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+}
+
+.alien-avatar-display {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 0.75rem;
+  border-radius: 50%;
+  background: #1e2621;
+  border: 2px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  transition: all 0.3s ease;
+}
+
+.alien-card.selected .alien-avatar-display {
+  border-color: var(--green);
+  box-shadow: 0 0 10px var(--green-glow);
+}
+
+/* Omnitrix Core Wheel */
+.omnitrix-wheel-outer {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 6px solid #2d3831;
+  background: #141a16;
+  margin: 1.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+  animation: pulseGreen 3s infinite;
+}
+
+.omnitrix-wheel-inner {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid var(--green);
+  background: radial-gradient(circle, #0e2012 0%, #050a06 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.omnitrix-hourglass {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The iconic Ben 10 Omnitrix shapes (triangles) */
+.omnitrix-hourglass::before,
+.omnitrix-hourglass::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+}
+
+.omnitrix-hourglass::before {
+  border-top: 65px solid var(--green);
+  top: 0;
+}
+
+.omnitrix-hourglass::after {
+  border-bottom: 65px solid var(--green);
+  bottom: 0;
+}
+
+.omnitrix-wheel-inner.active {
+  animation: rotateClockwise 15s linear infinite;
+}
+
+.omnitrix-wheel-inner.incorrect {
+  border-color: var(--accent-red);
+}
+.omnitrix-wheel-inner.incorrect .omnitrix-hourglass::before {
+  border-top-color: var(--accent-red);
+}
+.omnitrix-wheel-inner.incorrect .omnitrix-hourglass::after {
+  border-bottom-color: var(--accent-red);
+}
+
+/* Options Grid for Multiple Choice Answers */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+.btn-option {
+  font-size: 1.8rem;
+  padding: 1.2rem;
+  border-radius: 16px;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  background: rgba(30, 41, 35, 0.8);
+  border: 2px solid rgba(57, 255, 20, 0.2);
+  transition: all 0.2s ease;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.btn-option:hover {
+  background: rgba(57, 255, 20, 0.1);
+  border-color: var(--green);
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+  transform: scale(1.03);
+}
+
+.btn-option.correct {
+  background: #1b4d22 !important;
+  border-color: var(--green) !important;
+  color: var(--green) !important;
+  box-shadow: 0 0 20px var(--green-glow) !important;
+}
+
+.btn-option.incorrect {
+  background: #5c1d1d !important;
+  border-color: var(--accent-red) !important;
+  color: #ff9e9e !important;
+  box-shadow: 0 0 20px rgba(255, 59, 48, 0.4) !important;
+}
+
+/* Hologram Display */
+.hologram-display {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin: 1rem 0;
+  color: var(--green);
+  text-shadow: 0 0 12px var(--green-glow);
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 3px;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Progress bar container */
+.energy-bar-container {
+  width: 100%;
+  height: 16px;
+  background: #141a17;
+  border: 1px solid rgba(57, 255, 20, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1.5rem 0;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.energy-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1d9d13 0%, #39ff14 100%);
+  box-shadow: 0 0 10px var(--green-glow);
+  transition: width 0.4s ease-in-out;
+}
+
+/* Sound and Visual feedback overlay */
+.flash-correct {
+  animation: flashGreen 0.5s ease-out;
+}
+
+@keyframes flashGreen {
+  0% { background-color: rgba(57, 255, 20, 0); }
+  50% { background-color: rgba(57, 255, 20, 0.15); }
+  100% { background-color: rgba(57, 255, 20, 0); }
+}
+
+.character-message {
+  background: rgba(30, 45, 37, 0.6);
+  border-left: 4px solid var(--green);
+  padding: 0.75rem 1rem;
+  border-radius: 0 12px 12px 0;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
